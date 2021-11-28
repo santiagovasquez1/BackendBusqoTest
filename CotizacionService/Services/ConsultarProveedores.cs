@@ -6,27 +6,27 @@ using CotizacionService.Models;
 
 namespace CotizacionService.Services
 {
-   public class ConsultarCotizaciones : ServiceBase
+   public class ConsultarProveedores : ServiceBase
    {
       public override ResponseBase Execute()
       {
          try
          {
-            using (CotizacionesGetCommand command = new CotizacionesGetCommand())
+            using (ProvedoresGetCommand command = new ProvedoresGetCommand())
             {
                HttpStatusCode statusCode = command.Execute();
                if (statusCode == HttpStatusCode.OK)
                {
-                  return new CotizacionesResponse
+                  return new ProvedorResponse
                   {
                      ReturnCode = ReturnCodeList.SUCCESS,
-                     Message = "Cotizaciones obtenidas con exito",
-                     Cotizaciones = command.Cotizaciones
+                     Message = "Consulta de productos exitosa",
+                     Proveedores = command.Provedores
                   };
                }
                else
                {
-                  throw new Exception("No se encontraron cotizaciones");
+                  throw new Exception("No se encontraron productos");
                }
             }
          }
@@ -42,7 +42,7 @@ namespace CotizacionService.Services
 
       public override ResponseBase Execute(RequestBase request)
       {
-         return null;
+         return this.Execute();
       }
    }
 }

@@ -25,7 +25,7 @@ namespace BuscoWebApi
          Configuration = configuration;
          if (env.IsDevelopment())
          {
-            Environment.SetEnvironmentVariable("CONNECTION_STRING", @"Server=localhost;Database=buscotest;Uid=root;Pwd=Atila_1205;Port:3306;");
+            Environment.SetEnvironmentVariable("CONNECTION_STRING", @"Server=localhost;Database=buscotest;Uid=root;Pwd=Atila_1205;Port=3306;");
          }
       }
 
@@ -44,7 +44,9 @@ namespace BuscoWebApi
 
          services.AddTransient<ServiceBase, CrearCotizacion>();
          services.AddTransient<ServiceBase, ConsultarCotizaciones>();
-
+         services.AddTransient<ServiceBase,ConsultarProductos>();
+         services.AddTransient<ServiceBase, ConsultarProveedores>();
+         
          DbProviderFactories.RegisterFactory("MySql.Data.MySqlClient", MySqlClientFactory.Instance);
          DatabaseOptions.ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
       }
