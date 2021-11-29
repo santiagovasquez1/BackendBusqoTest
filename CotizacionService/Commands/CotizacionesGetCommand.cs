@@ -24,7 +24,8 @@ namespace CotizacionService.Commands
       + "FROM BUSCOTEST.COTIZACIONES AS C "
       + "INNER JOIN BUSCOTEST.CLIENTES AS CL ON C.CLIENTE_ID = CL.ID "
       + "INNER JOIN BUSCOTEST.PRODUCTOS AS P ON C.PRODUCTO_ID = P.ID "
-      + "INNER JOIN BUSCOTEST.PROVEEDORES AS PR ON C.PROVEEDOR_ID = PR.ID;";
+      + "INNER JOIN BUSCOTEST.PROVEEDORES AS PR ON C.PROVEEDOR_ID = PR.ID "
+      + "ORDER BY C.ID;";
 
       public CotizacionesGetCommand()
       {
@@ -33,7 +34,7 @@ namespace CotizacionService.Commands
       public ResponseBase Response { get; set; }
       public List<CotizacionInfo> Cotizaciones { get; set; }
 
-      public override HttpStatusCode Execute()
+      public override HttpStatusCode Execute()     
       {
          try
          {

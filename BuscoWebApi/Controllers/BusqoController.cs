@@ -20,7 +20,7 @@ namespace BuscoWebApi.Controllers
       private readonly ServiceBase consutarCotizaciones;
       private readonly ServiceBase consultarProductos;
       private readonly ServiceBase consultarProveedores;
-
+      private readonly ServiceBase consultarClientePorCedula;
 
       /// <summary>
       /// Constructor
@@ -31,6 +31,7 @@ namespace BuscoWebApi.Controllers
          this.consutarCotizaciones = services.FirstOrDefault(x => x.ServiceName() == "ConsultarCotizaciones");
          this.consultarProductos = services.FirstOrDefault(x => x.ServiceName() == "ConsultarProductos");
          this.consultarProveedores = services.FirstOrDefault(x => x.ServiceName() == "ConsultarProveedores");
+         this.consultarClientePorCedula = services.FirstOrDefault(x => x.ServiceName() == "ConsultarClientePorCedula");
       }
 
       [HttpGet]
@@ -104,6 +105,40 @@ namespace BuscoWebApi.Controllers
          try
          {
             ResponseBase response = this.consultarProveedores.Execute();
+            if (response.ReturnCode == ReturnCodeList.SUCCESS)
+            {
+               return Ok(response);
+            }
+            else
+            {
+               return BadRequest(response);
+            }
+         }
+         catch (System.Exception ex)
+         {
+            Console.WriteLine(ex.Message);
+            return BadRequest(new ResponseBase
+            {
+               ReturnCode = ReturnCodeList.INTERNAL_ERROR,
+               Message = ex.Message
+            });
+         }
+      }
+
+      [HttpGet]
+      [Route("ConsultarClientePorCedula/{cedula}")]
+      [Consumes(MediaTypeNames.Application.Json)]
+      [Produces(MediaTypeNames.Application.Json)]
+      [ProducesResponseType(typeof(ResponseBase), StatusCodes.Status200OK)]
+      public IActionResult ConsultarClientePorCedula([FromRoute] Int64 cedula)
+      {
+         try
+         {
+            var request = new RequestBase
+            {
+               Id = cedula
+            };
+            ResponseBase response = this.consultarClientePorCedula.Execute(request);
             if (response.ReturnCode == ReturnCodeList.SUCCESS)
             {
                return Ok(response);

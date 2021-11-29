@@ -46,6 +46,7 @@ namespace BuscoWebApi
          services.AddTransient<ServiceBase, ConsultarCotizaciones>();
          services.AddTransient<ServiceBase,ConsultarProductos>();
          services.AddTransient<ServiceBase, ConsultarProveedores>();
+         services.AddTransient<ServiceBase, ConsultarClientePorCedula>();
          
          DbProviderFactories.RegisterFactory("MySql.Data.MySqlClient", MySqlClientFactory.Instance);
          DatabaseOptions.ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");

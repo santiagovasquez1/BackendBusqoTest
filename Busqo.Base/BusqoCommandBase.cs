@@ -3,6 +3,7 @@ using System.Data.Common;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Xml.Linq;
 using Newtonsoft.Json;
 
 namespace Busqo.Base
@@ -43,6 +44,7 @@ namespace Busqo.Base
 
       public BusqoCommandBase()
       {
+         XElement xe = XElement.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App.config"));
          DbProviderFactory providerFactory = DbProviderFactories.GetFactory("MySql.Data.MySqlClient");
          if (providerFactory != null)
          {
